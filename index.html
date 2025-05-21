@@ -1,0 +1,1930 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackRed CRM | Automação Comercial</title>
+    <style>
+        /* Reset e Estilos Globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #ff0000;
+            --secondary-color: #000000;
+            --accent-color: #ff3333;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --bg-light: #1a1a1a;
+            --bg-dark: #0d0d0d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Container Principal */
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 15px;
+        }
+        
+        /* Header e Navbar */
+        header {
+            background-color: var(--bg-dark);
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+        
+        .logo {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--bg-dark);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            right: 0;
+            border: 1px solid var(--primary-color);
+        }
+        
+        .dropdown-content a {
+            color: var(--text-light);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--bg-light);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        /* Conteúdo Principal */
+        main {
+            flex: 1;
+            padding: 2rem 0;
+        }
+        
+        .welcome-message {
+            background-color: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .welcome-message h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Seções */
+        .section {
+            background-color: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+        }
+        
+        /* Formulários */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #333;
+            color: var(--text-light);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-secondary {
+            background-color: #444;
+            color: var(--text-light);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #555;
+        }
+        
+        /* Tabelas */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .table th, .table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+        
+        .table th {
+            background-color: var(--bg-dark);
+            color: var(--primary-color);
+        }
+        
+        .table tr:hover {
+            background-color: #222;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .status-new {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .status-contact {
+            background-color: var(--warning-color);
+            color: black;
+        }
+        
+        .status-proposal {
+            background-color: var(--info-color);
+            color: white;
+        }
+        
+        .status-closed {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Cards */
+        .card {
+            background-color: var(--bg-dark);
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-title {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .card-date {
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+        
+        /* Dashboard */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: 5px;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+        
+        .stat-label {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--bg-dark);
+            padding: 2rem;
+            border-radius: 5px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid var(--primary-color);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-title {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                background-color: var(--bg-dark);
+                width: 200px;
+                padding: 1rem;
+                border: 1px solid var(--primary-color);
+                z-index: 100;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--bg-dark);
+            padding: 1rem 0;
+            text-align: center;
+            border-top: 2px solid var(--primary-color);
+            margin-top: auto;
+        }
+        
+        .footer-text {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header com Navbar -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Black<span style="color: #fff;">Red</span> CRM</a>
+                
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                
+                <div class="nav-links" id="navLinks">
+                    <a href="#" data-section="dashboard">Dashboard</a>
+                    <a href="#" data-section="leads">Leads</a>
+                    <a href="#" data-section="contacts">Contatos</a>
+                    <a href="#" data-section="activities">Atividades</a>
+                    <a href="#" data-section="reports">Relatórios</a>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="user-menu">Minha Conta</a>
+                        <div class="dropdown-content">
+                            <a href="#" data-section="profile">Perfil</a>
+                            <a href="#" data-section="settings">Configurações</a>
+                            <a href="#" id="logoutBtn">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Conteúdo Principal -->
+    <main>
+        <div class="container">
+            <!-- Mensagem de Boas-Vindas -->
+            <div class="welcome-message" id="welcomeMessage">
+                <h2>Bem-vindo, <span id="userName"></span>!</h2>
+                <p>Você tem <span id="pendingTasks">0</span> tarefas pendentes e <span id="newLeads">0</span> novos leads hoje.</p>
+            </div>
+            
+            <!-- Seção Dashboard -->
+            <section class="section active" id="dashboard">
+                <div class="section-header">
+                    <h2 class="section-title">Dashboard</h2>
+                    <div>
+                        <button class="btn btn-primary" id="refreshDashboard">Atualizar</button>
+                    </div>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-label">Leads Totais</div>
+                        <div class="stat-value" id="totalLeads">0</div>
+                        <div class="stat-label">+0% desde ontem</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">Contatos Hoje</div>
+                        <div class="stat-value" id="contactsToday">0</div>
+                        <div class="stat-label">+0% desde ontem</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">Propostas</div>
+                        <div class="stat-value" id="totalProposals">0</div>
+                        <div class="stat-label">+0% desde ontem</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">Conversão</div>
+                        <div class="stat-value" id="conversionRate">0%</div>
+                        <div class="stat-label">+0% desde ontem</div>
+                    </div>
+                </div>
+                
+                <div class="section-header">
+                    <h3 class="section-title">Atividades Recentes</h3>
+                    <button class="btn btn-secondary" id="addActivityBtn">Nova Atividade</button>
+                </div>
+                
+                <div id="recentActivities">
+                    <!-- Atividades serão carregadas aqui via JavaScript -->
+                </div>
+            </section>
+            
+            <!-- Seção de Leads -->
+            <section class="section" id="leads">
+                <div class="section-header">
+                    <h2 class="section-title">Gerenciamento de Leads</h2>
+                    <div>
+                        <button class="btn btn-primary" id="addLeadBtn">Adicionar Lead</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" class="form-control" id="searchLeads" placeholder="Pesquisar leads...">
+                </div>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Empresa</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsTable">
+                        <!-- Leads serão carregados aqui via JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+            
+            <!-- Seção de Contatos -->
+            <section class="section" id="contacts">
+                <div class="section-header">
+                    <h2 class="section-title">Histórico de Contatos</h2>
+                    <div>
+                        <button class="btn btn-primary" id="addContactBtn">Registrar Contato</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <select class="form-control" id="filterContacts">
+                        <option value="all">Todos os contatos</option>
+                        <option value="today">Hoje</option>
+                        <option value="week">Esta semana</option>
+                        <option value="month">Este mês</option>
+                    </select>
+                </div>
+                
+                <div id="contactsList">
+                    <!-- Contatos serão carregados aqui via JavaScript -->
+                </div>
+            </section>
+            
+            <!-- Seção de Atividades -->
+            <section class="section" id="activities">
+                <div class="section-header">
+                    <h2 class="section-title">Minhas Atividades</h2>
+                    <div>
+                        <button class="btn btn-primary" id="addNewActivityBtn">Nova Atividade</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <select class="form-control" id="filterActivities">
+                        <option value="all">Todas as atividades</option>
+                        <option value="pending">Pendentes</option>
+                        <option value="completed">Concluídas</option>
+                        <option value="overdue">Atrasadas</option>
+                    </select>
+                </div>
+                
+                <div id="activitiesList">
+                    <!-- Atividades serão carregadas aqui via JavaScript -->
+                </div>
+            </section>
+            
+            <!-- Seção de Relatórios -->
+            <section class="section" id="reports">
+                <div class="section-header">
+                    <h2 class="section-title">Relatórios</h2>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">Conversão de Leads</h3>
+                    <p>Visualize o desempenho da sua equipe comercial</p>
+                    <canvas id="conversionChart" height="300"></canvas>
+                </div>
+                
+                <div class="card" style="margin-top: 1rem;">
+                    <h3 class="card-title">Atividades por Status</h3>
+                    <p>Distribuição das atividades por status</p>
+                    <canvas id="activitiesChart" height="300"></canvas>
+                </div>
+            </section>
+            
+            <!-- Seção de Perfil -->
+            <section class="section" id="profile">
+                <div class="section-header">
+                    <h2 class="section-title">Meu Perfil</h2>
+                </div>
+                
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label class="form-label" for="profileName">Nome Completo</label>
+                        <input type="text" class="form-control" id="profileName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="profileEmail">E-mail</label>
+                        <input type="email" class="form-control" id="profileEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="profileCompany">Empresa</label>
+                        <input type="text" class="form-control" id="profileCompany" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="profilePhone">Telefone</label>
+                        <input type="tel" class="form-control" id="profilePhone">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                </form>
+            </section>
+            
+            <!-- Seção de Configurações -->
+            <section class="section" id="settings">
+                <div class="section-header">
+                    <h2 class="section-title">Configurações</h2>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">Notificações</h3>
+                    <form id="notificationSettings">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="emailNotifications"> Receber notificações por e-mail
+                            </label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="browserNotifications"> Receber notificações no navegador
+                            </label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="notificationFrequency">Frequência de notificações</label>
+                            <select class="form-control" id="notificationFrequency">
+                                <option value="immediate">Imediatamente</option>
+                                <option value="daily">Resumo diário</option>
+                                <option value="weekly">Resumo semanal</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Salvar Configurações</button>
+                    </form>
+                </div>
+                
+                <div class="card" style="margin-top: 1rem;">
+                    <h3 class="card-title">Exportar Dados</h3>
+                    <p>Exporte seus dados para backup ou análise</p>
+                    <button class="btn btn-secondary" id="exportLeadsBtn">Exportar Leads</button>
+                    <button class="btn btn-secondary" id="exportContactsBtn">Exportar Contatos</button>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Modal para Adicionar Lead -->
+    <div class="modal" id="addLeadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Adicionar Novo Lead</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <form id="addLeadForm">
+                <div class="form-group">
+                    <label class="form-label" for="leadName">Nome do Lead*</label>
+                    <input type="text" class="form-control" id="leadName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="leadCompany">Empresa</label>
+                    <input type="text" class="form-control" id="leadCompany">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="leadEmail">E-mail*</label>
+                    <input type="email" class="form-control" id="leadEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="leadPhone">Telefone</label>
+                    <input type="tel" class="form-control" id="leadPhone">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="leadSource">Origem</label>
+                    <select class="form-control" id="leadSource">
+                        <option value="website">Site</option>
+                        <option value="social">Redes Sociais</option>
+                        <option value="referral">Indicação</option>
+                        <option value="event">Evento</option>
+                        <option value="other">Outro</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="leadStatus">Status</label>
+                    <select class="form-control" id="leadStatus">
+                        <option value="new">Novo</option>
+                        <option value="contacted">Contactado</option>
+                        <option value="proposal">Proposta Enviada</option>
+                        <option value="negotiation">Em Negociação</option>
+                        <option value="closed">Fechado</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="leadNotes">Observações</label>
+                    <textarea class="form-control" id="leadNotes" rows="3"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Salvar Lead</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal para Adicionar Contato -->
+    <div class="modal" id="addContactModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Registrar Contato</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <form id="addContactForm">
+                <div class="form-group">
+                    <label class="form-label" for="contactLead">Lead*</label>
+                    <select class="form-control" id="contactLead" required>
+                        <!-- Leads serão carregados aqui via JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="contactType">Tipo de Contato*</label>
+                    <select class="form-control" id="contactType" required>
+                        <option value="email">E-mail</option>
+                        <option value="phone">Telefone</option>
+                        <option value="meeting">Reunião</option>
+                        <option value="demo">Demonstração</option>
+                        <option value="other">Outro</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="contactDate">Data*</label>
+                    <input type="datetime-local" class="form-control" id="contactDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="contactNotes">Detalhes*</label>
+                    <textarea class="form-control" id="contactNotes" rows="4" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="contactFollowUp">Próximo Acompanhamento</label>
+                    <input type="datetime-local" class="form-control" id="contactFollowUp">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Registrar Contato</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal para Adicionar Atividade -->
+    <div class="modal" id="addActivityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Nova Atividade</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <form id="addActivityForm">
+                <div class="form-group">
+                    <label class="form-label" for="activityTitle">Título*</label>
+                    <input type="text" class="form-control" id="activityTitle" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="activityType">Tipo*</label>
+                    <select class="form-control" id="activityType" required>
+                        <option value="task">Tarefa</option>
+                        <option value="meeting">Reunião</option>
+                        <option value="call">Ligação</option>
+                        <option value="email">E-mail</option>
+                        <option value="followup">Acompanhamento</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="activityLead">Relacionado a (Lead)</label>
+                    <select class="form-control" id="activityLead">
+                        <option value="">Nenhum</option>
+                        <!-- Leads serão carregados aqui via JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="activityDueDate">Data de Vencimento*</label>
+                    <input type="datetime-local" class="form-control" id="activityDueDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="activityPriority">Prioridade</label>
+                    <select class="form-control" id="activityPriority">
+                        <option value="low">Baixa</option>
+                        <option value="medium" selected>Média</option>
+                        <option value="high">Alta</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="activityNotes">Descrição</label>
+                    <textarea class="form-control" id="activityNotes" rows="3"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Criar Atividade</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal de Login -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Acessar o Sistema</h3>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="loginEmail">E-mail*</label>
+                    <input type="email" class="form-control" id="loginEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">Senha*</label>
+                    <input type="password" class="form-control" id="loginPassword" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Entrar</button>
+                <button type="button" class="btn btn-secondary" id="showRegisterBtn">Criar Conta</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal de Cadastro -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Criar Nova Conta</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label" for="registerName">Nome Completo*</label>
+                    <input type="text" class="form-control" id="registerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="registerEmail">E-mail*</label>
+                    <input type="email" class="form-control" id="registerEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="registerCompany">Empresa*</label>
+                    <input type="text" class="form-control" id="registerCompany" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="registerPassword">Senha*</label>
+                    <input type="password" class="form-control" id="registerPassword" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="registerConfirmPassword">Confirmar Senha*</label>
+                    <input type="password" class="form-control" id="registerConfirmPassword" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Criar Conta</button>
+                <button type="button" class="btn btn-secondary" id="showLoginBtn">Já tenho uma conta</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-text">BlackRed CRM &copy; 2023 - Sistema de Automação Comercial</p>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // =============================================
+        // FUNÇÕES GERAIS E UTILITÁRIAS
+        // =============================================
+        
+        // Função para formatar datas
+        function formatDate(dateString) {
+            const options = { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return new Date(dateString).toLocaleDateString('pt-BR', options);
+        }
+        
+        // Função para gerar IDs únicos
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+        
+        // Função para verificar se o usuário está logado
+        function checkAuth() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user) {
+                showLogin();
+                return false;
+            }
+            return true;
+        }
+        
+        // =============================================
+        // GERENCIAMENTO DE ESTADO E LOCALSTORAGE
+        // =============================================
+        
+        // Inicializar dados no localStorage se não existirem
+        function initializeStorage() {
+            if (!localStorage.getItem('users')) {
+                localStorage.setItem('users', JSON.stringify([]));
+            }
+            
+            if (!localStorage.getItem('leads')) {
+                localStorage.setItem('leads', JSON.stringify([]));
+            }
+            
+            if (!localStorage.getItem('contacts')) {
+                localStorage.setItem('contacts', JSON.stringify([]));
+            }
+            
+            if (!localStorage.getItem('activities')) {
+                localStorage.setItem('activities', JSON.stringify([]));
+            }
+        }
+        
+        // Obter dados do localStorage
+        function getData(key) {
+            return JSON.parse(localStorage.getItem(key)) || [];
+        }
+        
+        // Salvar dados no localStorage
+        function saveData(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+        
+        // =============================================
+        // GERENCIAMENTO DE USUÁRIOS
+        // =============================================
+        
+        // Registrar novo usuário
+        function registerUser(name, email, company, password) {
+            const users = getData('users');
+            
+            // Verificar se o e-mail já está cadastrado
+            if (users.some(user => user.email === email)) {
+                alert('Este e-mail já está cadastrado!');
+                return false;
+            }
+            
+            // Criar novo usuário
+            const newUser = {
+                id: generateId(),
+                name,
+                email,
+                company,
+                password, // Em uma aplicação real, isso seria um hash!
+                createdAt: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            saveData('users', users);
+            
+            // Logar o usuário automaticamente após o cadastro
+            loginUser(email, password);
+            
+            return true;
+        }
+        
+        // Login do usuário
+        function loginUser(email, password) {
+            const users = getData('users');
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                updateUIAfterLogin(user);
+                hideModal('loginModal');
+                return true;
+            } else {
+                alert('E-mail ou senha incorretos!');
+                return false;
+            }
+        }
+        
+        // Logout do usuário
+        function logoutUser() {
+            localStorage.removeItem('currentUser');
+            showLogin();
+        }
+        
+        // Atualizar UI após login
+        function updateUIAfterLogin(user) {
+            document.getElementById('userName').textContent = user.name;
+            
+            // Mostrar seções autenticadas e esconder login
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('welcomeMessage').style.display = 'block';
+            
+            // Atualizar dados do dashboard
+            loadDashboardData();
+            loadLeads();
+            loadRecentActivities();
+        }
+        
+        // =============================================
+        // GERENCIAMENTO DE LEADS
+        // =============================================
+        
+        // Adicionar novo lead
+        function addLead(leadData) {
+            const leads = getData('leads');
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            
+            const newLead = {
+                id: generateId(),
+                ...leadData,
+                userId: user.id,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            leads.push(newLead);
+            saveData('leads', leads);
+            
+            loadLeads();
+            loadDashboardData();
+            
+            return newLead;
+        }
+        
+        // Atualizar lead
+        function updateLead(leadId, updatedData) {
+            const leads = getData('leads');
+            const leadIndex = leads.findIndex(lead => lead.id === leadId);
+            
+            if (leadIndex !== -1) {
+                leads[leadIndex] = {
+                    ...leads[leadIndex],
+                    ...updatedData,
+                    updatedAt: new Date().toISOString()
+                };
+                
+                saveData('leads', leads);
+                loadLeads();
+                loadDashboardData();
+                
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // Excluir lead
+        function deleteLead(leadId) {
+            const leads = getData('leads');
+            const filteredLeads = leads.filter(lead => lead.id !== leadId);
+            
+            saveData('leads', filteredLeads);
+            loadLeads();
+            loadDashboardData();
+            
+            return true;
+        }
+        
+        // Carregar leads na tabela
+        function loadLeads() {
+            if (!checkAuth()) return;
+            
+            const leads = getData('leads');
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const userLeads = leads.filter(lead => lead.userId === user.id);
+            
+            const leadsTable = document.getElementById('leadsTable');
+            leadsTable.innerHTML = '';
+            
+            userLeads.forEach(lead => {
+                const row = document.createElement('tr');
+                
+                // Determinar a classe de status
+                let statusClass = '';
+                switch(lead.status) {
+                    case 'new': statusClass = 'status-new'; break;
+                    case 'contacted': statusClass = 'status-contact'; break;
+                    case 'proposal': statusClass = 'status-proposal'; break;
+                    case 'closed': statusClass = 'status-closed'; break;
+                }
+                
+                row.innerHTML = `
+                    <td>${lead.name}</td>
+                    <td>${lead.company || '-'}</td>
+                    <td>${lead.email}</td>
+                    <td>${lead.phone || '-'}</td>
+                    <td><span class="status-badge ${statusClass}">${getStatusText(lead.status)}</span></td>
+                    <td>
+                        <button class="btn btn-secondary btn-sm view-lead" data-id="${lead.id}">Ver</button>
+                        <button class="btn btn-secondary btn-sm edit-lead" data-id="${lead.id}">Editar</button>
+                        <button class="btn btn-secondary btn-sm delete-lead" data-id="${lead.id}">Excluir</button>
+                    </td>
+                `;
+                
+                leadsTable.appendChild(row);
+            });
+            
+            // Atualizar dropdowns de leads em outros modais
+            updateLeadDropdowns();
+        }
+        
+        // Obter texto do status
+        function getStatusText(status) {
+            const statusMap = {
+                'new': 'Novo',
+                'contacted': 'Contactado',
+                'proposal': 'Proposta',
+                'negotiation': 'Negociação',
+                'closed': 'Fechado'
+            };
+            
+            return statusMap[status] || status;
+        }
+        
+        // Atualizar dropdowns de leads em outros modais
+        function updateLeadDropdowns() {
+            const leads = getData('leads');
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const userLeads = leads.filter(lead => lead.userId === user.id);
+            
+            const leadDropdowns = [
+                document.getElementById('contactLead'),
+                document.getElementById('activityLead')
+            ];
+            
+            leadDropdowns.forEach(dropdown => {
+                if (dropdown) {
+                    // Salvar o valor selecionado atual
+                    const currentValue = dropdown.value;
+                    
+                    // Limpar e recriar as opções
+                    dropdown.innerHTML = '';
+                    
+                    // Adicionar opção padrão
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = dropdown.id === 'contactLead' ? 'Selecione um lead' : 'Nenhum';
+                    dropdown.appendChild(defaultOption);
+                    
+                    // Adicionar leads
+                    userLeads.forEach(lead => {
+                        const option = document.createElement('option');
+                        option.value = lead.id;
+                        option.textContent = `${lead.name} - ${lead.company || 'Sem empresa'}`;
+                        dropdown.appendChild(option);
+                    });
+                    
+                    // Restaurar o valor selecionado se ainda existir
+                    if (userLeads.some(lead => lead.id === currentValue)) {
+                        dropdown.value = currentValue;
+                    }
+                }
+            });
+        }
+        
+        // =============================================
+        // GERENCIAMENTO DE CONTATOS
+        // =============================================
+        
+        // Adicionar novo contato
+        function addContact(contactData) {
+            const contacts = getData('contacts');
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            
+            const newContact = {
+                id: generateId(),
+                ...contactData,
+                userId: user.id,
+                createdAt: new Date().toISOString()
+            };
+            
+            contacts.push(newContact);
+            saveData('contacts', contacts);
+            
+            // Atualizar status do lead se necessário
+            if (contactData.leadId) {
+                const leads = getData('leads');
+                const lead = leads.find(l => l.id === contactData.leadId);
+                
+                if (lead && lead.status === 'new') {
+                    updateLead(contactData.leadId, { status: 'contacted' });
+                }
+            }
+            
+            loadContacts();
+            loadDashboardData();
+            loadRecentActivities();
+            
+            return newContact;
+        }
+        
+        // Carregar contatos
+        function loadContacts(filter = 'all') {
+            if (!checkAuth()) return;
+            
+            const contacts = getData('contacts');
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            let userContacts = contacts.filter(contact => contact.userId === user.id);
+            
+            // Aplicar filtro
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const weekAgo = new Date(today);
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            const monthAgo = new Date(today);
+            monthAgo.setMonth(monthAgo.getMonth() - 1);
+            
+            switch(filter) {
+                case 'today':
+                    userContacts = userContacts.filter(contact => {
+                        const contactDate = new Date(contact.date);
+                        return contactDate >= today;
+                    });
+                    break;
+                case 'week':
+                    userContacts = userContacts.filter(contact => {
+                        const contactDate = new Date(contact.date);
+                        return contactDate >= weekAgo;
+                    });
+                    break;
+                case 'month':
+                    userContacts = userContacts.filter(contact => {
+                        const contactDate = new Date(contact.date);
+                        return contactDate >= monthAgo;
+                    });
+                    break;
+            }
+            
+            // Ordenar por data (mais recente primeiro)
+            userContacts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            const contactsList = document.getElementById('contactsList');
+            contactsList.innerHTML = '';
+            
+            if (userContacts.length === 0) {
+                contactsList.innerHTML = '<p>Nenhum contato encontrado.</p>';
+                return;
+            }
+            
+            // Obter leads para exibir os nomes
+            const leads = getData('leads');
+            
+            userContacts.forEach(contact => {
+                const lead = leads.find(l => l.id === contact.leadId);
+                const leadName = lead ? lead.name : 'Lead não encontrado';
+                
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-title">${leadName}</div>
+                        <div class="card-date">${formatDate(contact.date)}</div>
+                    </div>
+                    <p><strong>Tipo:</strong> ${getContactTypeText(contact.type)}</p>
+                    <p><strong>Detalhes:</strong> ${contact.notes}</p>
+                    ${contact.followUp ? `<p><strong>Próximo acompanhamento:</strong> ${formatDate(contact.followUp)}</p>` : ''}
+                `;
+                
+                contactsList.appendChild(card);
+            });
+        }
+        
+        // Obter texto do tipo de contato
+        function getContactTypeText(type) {
+            const typeMap = {
+                'email': 'E-mail',
+                'phone': 'Telefone',
+                'meeting': 'Reunião',
+                'demo': 'Demonstração',
+                'other': 'Outro'
+            };
+            
+            return typeMap[type] || type;
+        }
+        
+        // =============================================
+        // GERENCIAMENTO DE ATIVIDADES
+        // =============================================
+        
+        // Adicionar nova atividade
+        function addActivity(activityData) {
+            const activities = getData('activities');
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            
+            const newActivity = {
+                id: generateId(),
+                ...activityData,
+                userId: user.id,
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+            
+            activities.push(newActivity);
+            saveData('activities', activities);
+            
+            loadActivities();
+            loadDashboardData();
+            loadRecentActivities();
+            
+            return newActivity;
+        }
+        
+        // Atualizar atividade
+        function updateActivity(activityId, updatedData) {
+            const activities = getData('activities');
+            const activityIndex = activities.findIndex(act => act.id === activityId);
+            
+            if (activityIndex !== -1) {
+                activities[activityIndex] = {
+                    ...activities[activityIndex],
+                    ...updatedData
+                };
+                
+                saveData('activities', activities);
+                loadActivities();
+                loadRecentActivities();
+                
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // Carregar atividades
+        function loadActivities(filter = 'all') {
+            if (!checkAuth()) return;
+            
+            const activities = getData('activities');
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            let userActivities = activities.filter(act => act.userId === user.id);
+            
+            // Aplicar filtro
+            const now = new Date();
+            
+            switch(filter) {
+                case 'pending':
+                    userActivities = userActivities.filter(act => act.status === 'pending' && new Date(act.dueDate) >= now);
+                    break;
+                case 'completed':
+                    userActivities = userActivities.filter(act => act.status === 'completed');
+                    break;
+                case 'overdue':
+                    userActivities = userActivities.filter(act => act.status === 'pending' && new Date(act.dueDate) < now);
+                    break;
+            }
+            
+            // Ordenar por data de vencimento (mais próximas primeiro)
+            userActivities.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+            
+            const activitiesList = document.getElementById('activitiesList');
+            activitiesList.innerHTML = '';
+            
+            if (userActivities.length === 0) {
+                activitiesList.innerHTML = '<p>Nenhuma atividade encontrada.</p>';
+                return;
+            }
+            
+            // Obter leads para exibir os nomes
+            const leads = getData('leads');
+            
+            userActivities.forEach(activity => {
+                const lead = activity.leadId ? leads.find(l => l.id === activity.leadId) : null;
+                const leadName = lead ? lead.name : 'Nenhum lead associado';
+                
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                // Verificar se está atrasada
+                const dueDate = new Date(activity.dueDate);
+                const isOverdue = activity.status === 'pending' && dueDate < now;
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-title">${activity.title}</div>
+                        <div class="card-date ${isOverdue ? 'text-danger' : ''}">
+                            ${formatDate(activity.dueDate)} ${isOverdue ? '(Atrasada)' : ''}
+                        </div>
+                    </div>
+                    <p><strong>Tipo:</strong> ${getActivityTypeText(activity.type)}</p>
+                    <p><strong>Prioridade:</strong> ${getPriorityText(activity.priority)}</p>
+                    <p><strong>Lead:</strong> ${leadName}</p>
+                    <p><strong>Status:</strong> ${activity.status === 'completed' ? 'Concluída' : 'Pendente'}</p>
+                    ${activity.notes ? `<p><strong>Descrição:</strong> ${activity.notes}</p>` : ''}
+                    
+                    <div style="margin-top: 1rem;">
+                        ${activity.status !== 'completed' ? 
+                            `<button class="btn btn-primary btn-sm complete-activity" data-id="${activity.id}">
+                                Marcar como Concluída
+                            </button>` : ''}
+                        <button class="btn btn-secondary btn-sm edit-activity" data-id="${activity.id}">
+                            Editar
+                        </button>
+                        <button class="btn btn-secondary btn-sm delete-activity" data-id="${activity.id}">
+                            Excluir
+                        </button>
+                    </div>
+                `;
+                
+                activitiesList.appendChild(card);
+            });
+        }
+        
+        // Carregar atividades recentes no dashboard
+        function loadRecentActivities() {
+            if (!checkAuth()) return;
+            
+            const activities = getData('activities');
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            let userActivities = activities.filter(act => act.userId === user.id);
+            
+            // Pegar apenas as 5 mais recentes
+            userActivities.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            userActivities = userActivities.slice(0, 5);
+            
+            const recentActivities = document.getElementById('recentActivities');
+            recentActivities.innerHTML = '';
+            
+            if (userActivities.length === 0) {
+                recentActivities.innerHTML = '<p>Nenhuma atividade recente.</p>';
+                return;
+            }
+            
+            userActivities.forEach(activity => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-title">${activity.title}</div>
+                        <div class="card-date">${formatDate(activity.createdAt)}</div>
+                    </div>
+                    <p>Status: ${activity.status === 'completed' ? 'Concluída' : 'Pendente'}</p>
+                    <p>Vencimento: ${formatDate(activity.dueDate)}</p>
+                `;
+                
+                recentActivities.appendChild(card);
+            });
+        }
+        
+        // Obter texto do tipo de atividade
+        function getActivityTypeText(type) {
+            const typeMap = {
+                'task': 'Tarefa',
+                'meeting': 'Reunião',
+                'call': 'Ligação',
+                'email': 'E-mail',
+                'followup': 'Acompanhamento'
+            };
+            
+            return typeMap[type] || type;
+        }
+        
+        // Obter texto da prioridade
+        function getPriorityText(priority) {
+            const priorityMap = {
+                'low': 'Baixa',
+                'medium': 'Média',
+                'high': 'Alta'
+            };
+            
+            return priorityMap[priority] || priority;
+        }
+        
+        // =============================================
+        // DASHBOARD E RELATÓRIOS
+        // =============================================
+        
+        // Carregar dados do dashboard
+        function loadDashboardData() {
+            if (!checkAuth()) return;
+            
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const leads = getData('leads').filter(lead => lead.userId === user.id);
+            const contacts = getData('contacts').filter(contact => contact.userId === user.id);
+            const activities = getData('activities').filter(act => act.userId === user.id);
+            
+            // Estatísticas básicas
+            document.getElementById('totalLeads').textContent = leads.length;
+            
+            // Contatos hoje
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const contactsToday = contacts.filter(contact => {
+                const contactDate = new Date(contact.date);
+                return contactDate >= today;
+            }).length;
+            
+            document.getElementById('contactsToday').textContent = contactsToday;
+            
+            // Propostas (leads com status proposal ou negotiation)
+            const proposals = leads.filter(lead => 
+                lead.status === 'proposal' || lead.status === 'negotiation'
+            ).length;
+            
+            document.getElementById('totalProposals').textContent = proposals;
+            
+            // Taxa de conversão (leads fechados / total leads)
+            const closedLeads = leads.filter(lead => lead.status === 'closed').length;
+            const conversionRate = leads.length > 0 ? 
+                Math.round((closedLeads / leads.length) * 100) : 0;
+            
+            document.getElementById('conversionRate').textContent = `${conversionRate}%`;
+            
+            // Tarefas pendentes
+            const pendingTasks = activities.filter(act => 
+                act.status === 'pending' && new Date(act.dueDate) >= new Date()
+            ).length;
+            
+            document.getElementById('pendingTasks').textContent = pendingTasks;
+            
+            // Novos leads hoje
+            const newLeadsToday = leads.filter(lead => {
+                const leadDate = new Date(lead.createdAt);
+                return leadDate >= today;
+            }).length;
+            
+            document.getElementById('newLeads').textContent = newLeadsToday;
+            
+            // Atualizar gráficos
+            updateCharts();
+        }
+        
+        // Atualizar gráficos
+        function updateCharts() {
+            if (!checkAuth()) return;
+            
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const leads = getData('leads').filter(lead => lead.userId === user.id);
+            const activities = getData('activities').filter(act => act.userId === user.id);
+            
+            // Gráfico de conversão de leads
+            const conversionCtx = document.getElementById('conversionChart').getContext('2d');
+            
+            // Dados por status
+            const leadStatuses = ['new', 'contacted', 'proposal', 'negotiation', 'closed'];
+            const leadCounts = leadStatuses.map(status => 
+                leads.filter(lead => lead.status === status).length
+            );
+            
+            if (window.conversionChart) {
+                window.conversionChart.destroy();
+            }
+            
+            window.conversionChart = new Chart(conversionCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Novos', 'Contactados', 'Proposta', 'Negociação', 'Fechados'],
+                    datasets: [{
+                        label: 'Leads por Status',
+                        data: leadCounts,
+                        backgroundColor: [
+                            'rgba(40, 167, 69, 0.7)',
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(23, 162, 184, 0.7)',
+                            'rgba(108, 117, 125, 0.7)',
+                            'rgba(220, 53, 69, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(40, 167, 69, 1)',
+                            'rgba(255, 193, 7, 1)',
+                            'rgba(23, 162, 184, 1)',
+                            'rgba(108, 117, 125, 1)',
+                            'rgba(220, 53, 69, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // Gráfico de atividades por status
+            const activitiesCtx = document.getElementById('activitiesChart').getContext('2d');
+            
+            const activityStatuses = ['pending', 'completed'];
+            const activityCounts = activityStatuses.map(status => 
+                activities.filter(act => act.status === status).length
+            );
+            
+            if (window.activitiesChart) {
+                window.activitiesChart.destroy();
+            }
+            
+            window.activitiesChart = new Chart(activitiesCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Pendentes', 'Concluídas'],
+                    datasets: [{
+                        data: activityCounts,
+                        backgroundColor: [
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(40, 167, 69, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 193, 7, 1)',
+                            'rgba(40, 167, 69, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+        
+        // =============================================
+        // GERENCIAMENTO DE MODAIS
+        // =============================================
+        
+        // Mostrar modal
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+        
+        // Esconder modal
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Mostrar seção
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+        }
+        
+        // Mostrar tela de login
+        function showLogin() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            document.getElementById('welcomeMessage').style.display = 'none';
+            showModal('loginModal');
+        }
+        
+        // =============================================
+        // EVENT LISTENERS
+        // =============================================
+        
+        // Inicializar o aplicativo quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeStorage();
+            
+            // Verificar se há usuário logado
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (user) {
+                updateUIAfterLogin(user);
+            } else {
+                showLogin();
+            }
+            
+            // Menu toggle para mobile
+            document.getElementById('menuToggle').addEventListener('click', function() {
+                document.getElementById('navLinks').classList.toggle('active');
+            });
+            
+            // Navegação entre seções
+            document.querySelectorAll('[data-section]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                    
+                    // Fechar menu mobile se estiver aberto
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            });
+            
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                logoutUser();
+            });
+            
+            // Alternar entre login e cadastro
+            document.getElementById('showRegisterBtn').addEventListener('click', function() {
+                hideModal('loginModal');
+                showModal('registerModal');
+            });
+            
+            document.getElementById('showLoginBtn').addEventListener('click', function() {
+                hideModal('registerModal');
+                showModal('loginModal');
+            });
+            
+            // Fechar modais
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    hideModal(modal.id);
+                });
+            });
+            
+            // Login
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                loginUser(email, password);
+            });
+            
+            // Cadastro
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const company = document.getElementById('registerCompany').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    alert('As senhas não coincidem!');
+                    return;
+                }
+                
+                registerUser(name, email, company, password);
+            });
+            
+            // Adicionar lead
+            document.getElementById('addLeadBtn').addEventListener('click', function() {
+                showModal('addLeadModal');
+            });
+            
+            document.getElementById('addLeadForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const leadData = {
+                    name: document.getElementById('leadName').value,
+                    company: document.getElementById('leadCompany').value,
+                    email: document.getElementById('leadEmail').value,
+                    phone: document.getElementById('leadPhone').value,
+                    source: document.getElementById('leadSource').value,
+                    status: document.getElementById('leadStatus').value,
+                    notes: document.getElementById('leadNotes').value
+                };
+                
+                addLead(leadData);
+                hideModal('addLeadModal');
+                this.reset();
+            });
+            
+            // Adicionar contato
+            document.getElementById('addContactBtn').addEventListener('click', function() {
+                showModal('addContactModal');
+                // Definir data/hora atual como padrão
+                const now = new Date();
+                const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+                document.getElementById('contactDate').value = localDateTime;
+            });
+            
+            document.getElementById('addContactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const contactData = {
+                    leadId: document.getElementById('contactLead').value,
+                    type: document.getElementById('contactType').value,
+                    date: document.getElementById('contactDate').value,
+                    notes: document.getElementById('contactNotes').value,
+                    followUp: document.getElementById('contactFollowUp').value || null
+                };
+                
+                addContact(contactData);
+                hideModal('addContactModal');
+                this.reset();
+            });
+            
+            // Adicionar atividade
+            document.getElementById('addActivityBtn').addEventListener('click', function() {
+                showModal('addActivityModal');
+            });
+            
+            document.getElementById('addNewActivityBtn').addEventListener('click', function() {
+                showModal('addActivityModal');
+            });
+            
+            document.getElementById('addActivityForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const activityData = {
+                    title: document.getElementById('activityTitle').value,
+                    type: document.getElementById('activityType').value,
+                    leadId: document.getElementById('activityLead').value || null,
+                    dueDate: document.getElementById('activityDueDate').value,
+                    priority: document.getElementById('activityPriority').value,
+                    notes: document.getElementById('activityNotes').value
+                };
+                
+                addActivity(activityData);
+                hideModal('addActivityModal');
+                this.reset();
+            });
+            
+            // Filtros
+            document.getElementById('filterContacts').addEventListener('change', function() {
+                loadContacts(this.value);
+            });
+            
+            document.getElementById('filterActivities').addEventListener('change', function() {
+                loadActivities(this.value);
+            });
+            
+            // Pesquisa de leads
+            document.getElementById('searchLeads').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const rows = document.querySelectorAll('#leadsTable tr');
+                
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(searchTerm) ? '' : 'none';
+                });
+            });
+            
+            // Atualizar dashboard
+            document.getElementById('refreshDashboard').addEventListener('click', function() {
+                loadDashboardData();
+            });
+            
+            // Delegar eventos para elementos dinâmicos
+            document.addEventListener('click', function(e) {
+                // Completar atividade
+                if (e.target.classList.contains('complete-activity')) {
+                    const activityId = e.target.getAttribute('data-id');
+                    updateActivity(activityId, { status: 'completed' });
+                }
+                
+                // Editar atividade
+                if (e.target.classList.contains('edit-activity')) {
+                    // Implementar edição de atividade
+                    alert('Edição de atividade será implementada aqui!');
+                }
+                
+                // Excluir atividade
+                if (e.target.classList.contains('delete-activity')) {
+                    if (confirm('Tem certeza que deseja excluir esta atividade?')) {
+                        const activityId = e.target.getAttribute('data-id');
+                        const activities = getData('activities');
+                        const filteredActivities = activities.filter(act => act.id !== activityId);
+                        saveData('activities', filteredActivities);
+                        loadActivities();
+                        loadRecentActivities();
+                    }
+                }
+                
+                // Ver lead
+                if (e.target.classList.contains('view-lead')) {
+                    // Implementar visualização de lead
+                    alert('Visualização de lead será implementada aqui!');
+                }
+                
+                // Editar lead
+                if (e.target.classList.contains('edit-lead')) {
+                    // Implementar edição de lead
+                    alert('Edição de lead será implementada aqui!');
+                }
+                
+                // Excluir lead
+                if (e.target.classList.contains('delete-lead')) {
+                    if (confirm('Tem certeza que deseja excluir este lead?')) {
+                        const leadId = e.target.getAttribute('data-id');
+                        deleteLead(leadId);
+                    }
+                }
+            });
+            
+            // Carregar dados iniciais
+            loadDashboardData();
+            loadLeads();
+            loadContacts();
+            loadActivities();
+            loadRecentActivities();
+        });
+    </script>
+</body>
+</html>
